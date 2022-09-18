@@ -1,0 +1,432 @@
+{
+	"info": {
+		"_postman_id": "2834807b-fdd0-4a89-81ec-1f175662725b",
+		"name": "Update Book Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23264688"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"userID\", jsonData.userID);\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    pm.expect(jsonData.username).to.eql(pm.environment.get(\"username\"));\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userName\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}"
+				},
+				"url": {
+					"raw": "https://bookstore.toolsqa.com/Account/v1/User",
+					"protocol": "https",
+					"host": [
+						"bookstore",
+						"toolsqa",
+						"com"
+					],
+					"path": [
+						"Account",
+						"v1",
+						"User"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.environment.set(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userName\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}"
+				},
+				"url": {
+					"raw": "https://bookstore.toolsqa.com/Account/v1/GenerateToken",
+					"protocol": "https",
+					"host": [
+						"bookstore",
+						"toolsqa",
+						"com"
+					],
+					"path": [
+						"Account",
+						"v1",
+						"GenerateToken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authorized user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userName\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}"
+				},
+				"url": {
+					"raw": "https://bookstore.toolsqa.com/Account/v1/Authorized",
+					"protocol": "https",
+					"host": [
+						"bookstore",
+						"toolsqa",
+						"com"
+					],
+					"path": [
+						"Account",
+						"v1",
+						"Authorized"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://bookstore.toolsqa.com/Account/v1/User/{{userID}}",
+					"protocol": "https",
+					"host": [
+						"bookstore",
+						"toolsqa",
+						"com"
+					],
+					"path": [
+						"Account",
+						"v1",
+						"User",
+						"{{userID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Books",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://bookstore.toolsqa.com/BookStore/v1/Books",
+					"protocol": "https",
+					"host": [
+						"bookstore",
+						"toolsqa",
+						"com"
+					],
+					"path": [
+						"BookStore",
+						"v1",
+						"Books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Books to user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userId\": \"{{userID}}\",\n  \"collectionOfIsbns\": [\n    {\n      \"isbn\": \"9781449325862\"\n    }\n  ]\n}"
+				},
+				"url": {
+					"raw": "https://bookstore.toolsqa.com/BookStore/v1/Books",
+					"protocol": "https",
+					"host": [
+						"bookstore",
+						"toolsqa",
+						"com"
+					],
+					"path": [
+						"BookStore",
+						"v1",
+						"Books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put Books",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userId\": \"string\",\n  \"isbn\": \"string\"\n}"
+				},
+				"url": {
+					"raw": "https://bookstore.toolsqa.com/BookStore/v1/Books/9781449325862",
+					"protocol": "https",
+					"host": [
+						"bookstore",
+						"toolsqa",
+						"com"
+					],
+					"path": [
+						"BookStore",
+						"v1",
+						"Books",
+						"9781449325862"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Book",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://bookstore.toolsqa.com/BookStore/v1/Book?ISBN=9781449325862",
+					"protocol": "https",
+					"host": [
+						"bookstore",
+						"toolsqa",
+						"com"
+					],
+					"path": [
+						"BookStore",
+						"v1",
+						"Book"
+					],
+					"query": [
+						{
+							"key": "ISBN",
+							"value": "9781449325862"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://bookstore.toolsqa.com/Account/v1/User/{{userID}}",
+					"protocol": "https",
+					"host": [
+						"bookstore",
+						"toolsqa",
+						"com"
+					],
+					"path": [
+						"Account",
+						"v1",
+						"User",
+						"{{userID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Book",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"isbn\": \"string\",\n  \"userId\": \"string\"\n}"
+				},
+				"url": {
+					"raw": "https://bookstore.toolsqa.com/BookStore/v1/Book",
+					"protocol": "https",
+					"host": [
+						"bookstore",
+						"toolsqa",
+						"com"
+					],
+					"path": [
+						"BookStore",
+						"v1",
+						"Book"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Books",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://bookstore.toolsqa.com/BookStore/v1/Books?UserId=e74b39dc-ed9a-421e-a6c6-b78bc81b3a7d",
+					"protocol": "https",
+					"host": [
+						"bookstore",
+						"toolsqa",
+						"com"
+					],
+					"path": [
+						"BookStore",
+						"v1",
+						"Books"
+					],
+					"query": [
+						{
+							"key": "UserId",
+							"value": "e74b39dc-ed9a-421e-a6c6-b78bc81b3a7d"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
